@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once "base.php";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,19 +25,19 @@ include_once "base.php";
       </marquee>
     </div>
     <div id="mm">
-      <?php    
-      
-      if(!empty($_POST)){
-        if($_POST['acc']== "admin" && $_POST['pw'] == "1234"){
+      <?php
+
+      if (!empty($_POST)) {
+        if ($_POST['acc'] == "admin" && $_POST['pw'] == "1234") {
           $_SESSION['login'] = 1;
-        }else{
+        } else {
           echo "帳號或密碼錯誤";
         }
       }
-      
-      if (!empty($_SESSION['login'])) {      
-        
-    ?>
+
+      if (!empty($_SESSION['login'])) {
+
+      ?>
         <!-- 登入後的畫面開始 -->
         <div class="ct a rb" style="position:relative; width:101.5%; left:-1%; padding:3px; top:-9px;">
           <a href="?do=tit">網站標題管理</a>|
@@ -46,36 +46,36 @@ include_once "base.php";
           <a href="?do=movie">院線片管理</a>|
           <a href="?do=order">電影訂票管理</a>
         </div>
-        <?php
+
+      <?php
 
         $do = (!empty($_GET['do'])) ? $_GET['do'] : "main";
-        $file = "backend/" . $do . "php";
+        $file = "backend/" . $do . ".php";
         if (file_exists($file)) {
           include $file;
         } else {
           include "backend/main.php";
         }
-
         ?>
         <!-- 登入後的畫面結束 -->
       <?php
-} else {
-  ?>
+      } else {
+      ?>
         <!-- 登入前的畫面開始 -->
         <form action="?" method="post">
           <table>
             <tr>
               <td>帳號</td>
-              <td><input type="text" name="acc" id=""></td>
+              <td><input type="text" name="acc"></td>
             </tr>
             <tr>
               <td>密碼</td>
-              <td><input type="text" name="pw" id=""></td>
+              <td><input type="text" name="pw"></td>
             </tr>
           </table>
           <div><input type="submit" value="登入"></div>
         </form>
-        <?php
+      <?php
       }
       ?>
       <!-- 登入前的畫面結束 -->
