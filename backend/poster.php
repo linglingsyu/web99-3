@@ -34,18 +34,27 @@
       <div>預告片排序</div>
       <div>預告片操作</div>
     </div>
-    <div style="overflow:auto; height:150px;">
+    <div style="overflow:auto; height:240px;">
       <?php
       $db = new DB("poster");
-      $rows = $db->all();
-      foreach ($rows as $row) {
+      $rows = $db->all([]," order by `rank`");
+      foreach ($rows as $k => $row) {
         $ischecked = ($row['sh'] == 1) ? "checked" : "";
+        //如果不是第一筆，顯示上一筆的id，如果是第一筆，顯示自己的id
+        $prev = ($k != 0)?$rows[$k-1]['id']:$row['id'];      
+        //如果不是最後一筆，顯示下一筆的id，如果是最後一筆，顯示自己的id
+        $next = ($k != (count($rows)-1))?$rows[$k+1]['id']:$row['id'];;
       ?>
         <div class="row">
           <div><img style="width:90px;" src="img/<?= $row['path'] ?>"></div>
           <div><input type="text" name="name[]" value="<?= $row['name'] ?>"></div>
           <div>
-            <button>往上</button><button>往下</button>
+            <!-- 
+              上一筆$k-1  + $k == 0 (第一筆)
+              下一筆$k+1  + $k ==  (count($rows)-1) (最後一筆)
+            -->
+            <button type="button" data-rank="<?= $row['id']."-". $prev ?>">往上</button>
+            <button type="button" data-rank="<?= $row['id']."-". $next ?>">往下</button>
           </div>
           <div><input type="checkbox" name="sh[]" value="<?= $row['id'] ?>" <?= $ischecked ?>>顯示</div>
           <div><input type="checkbox" name="del[]" value="<?= $row['id'] ?>">刪除</div>
@@ -62,7 +71,7 @@
       }
       ?>
     </div>
-    <div class="ct"><input type="submit" value="編輯確定"><input type="reset" value="重置"></div>
+    <div class="ct" ><input type="submit" value="編輯確定"><input type="reset" value="重置"></div>
   </div>
   </form> 
   <hr>
@@ -79,3 +88,16 @@
     <div class="ct"><input type="reset" value="重置"><input type="submit" value="新增"></div>
 </form>
 </div>
+
+<script>
+  $("button").on("click",function(){
+    let id = $(this).data("rank").split("-");
+    //我點下的那個按鈕的data-rank的值用-分開後，轉成陣列存放
+    $.post("api/rank.php",{id,"table":"poster"},function(res){
+      location.reload();
+    })
+  })
+
+
+
+</script>

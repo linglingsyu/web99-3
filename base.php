@@ -24,10 +24,10 @@ class DB{
       foreach ($arg[0] as $key => $value){
         $tmp[]=sprintf("`%s`='%s'",$key,$value);
       }
-      $sql = $sql + implode(" && ",$tmp);
+      $sql = $sql . implode(" && ",$tmp);
     }
     if(!empty($arg[1])){
-      $sql = $sql + $arg[1];
+      $sql = $sql . $arg[1];
     }
     return $this->pdo->query($sql)->fetchAll();
   }
