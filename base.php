@@ -19,15 +19,15 @@ class DB{
 
 
   public function all(...$arg){
-    $sql = "select * from `$this->table` where ";
+    $sql = "select * from `$this->table` ";
     if(!empty($arg[0]) && is_array($arg[0])){
       foreach ($arg[0] as $key => $value){
         $tmp[]=sprintf("`%s`='%s'",$key,$value);
       }
-      $sql = $sql . implode(" && ",$tmp);
+      $sql = $sql ." where ". implode(" && ",$tmp);
     }
     if(!empty($arg[1])){
-      $sql = $sql  . $arg[1] ;
+      $sql = $sql . $arg[1] ;
     }
     return $this->pdo->query($sql)->fetchAll();
   }
