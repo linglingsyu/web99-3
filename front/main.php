@@ -131,6 +131,18 @@ $rows = $po->all(['sh' => 1], " order by `rank`");
           $(next).slideDown(1000);
         });
         break;
+
+      case 4:
+      //縮放  left: ($(dom).width)/2
+      $(dom).animate({width:0,height:0,left:100,top:130},function(){
+        $(next).css({width:0,height:0,left:100,top:130});
+        $(next).show();
+        $(next).animate({width:200,height:260,left:0,top:0});
+        $(dom).hide();
+        $(dom).css({widht:200,height:260,left:0,top:0});
+      });
+      break;
+
     }
 
     $(".icon").on("click", function() {
