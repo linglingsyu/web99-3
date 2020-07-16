@@ -2,6 +2,7 @@
 
 date_default_timezone_set("Asia/Taipei");
 session_start();
+$level = ["","普遍級","輔導級","保護級","限制級"];
 
 class DB{
 
@@ -29,6 +30,7 @@ class DB{
     if(!empty($arg[1])){
       $sql = $sql . $arg[1] ;
     }
+    // echo $sql;
     return $this->pdo->query($sql)->fetchAll();
   }
   
@@ -38,7 +40,7 @@ class DB{
       foreach ($arg as $key => $value){
         $tmp[]=sprintf("`%s`='%s'",$key,$value);
       }
-      $sql = $sql + implode(" && ",$tmp);
+      $sql = $sql . implode(" && ",$tmp);
     }else{
       $sql = $sql . " where `id` = '". $arg. "'";
     }
@@ -47,16 +49,17 @@ class DB{
 
 
   public function count(...$arg){
-    $sql = "select count(*) from `$this->table`";
+    $sql = "select count(*) from `$this->table` ";
     if(!empty($arg[0]) && is_array($arg[0])){
       foreach ($arg[0] as $key => $value){
         $tmp[]=sprintf("`%s`='%s'",$key,$value);
       }
-      $sql = $sql + implode(" && ",$tmp);
+      $sql = $sql . " where ". implode(" && ",$tmp);
     }
     if(!empty($arg[1])){
-      $sql = $sql + $arg[1];
+      $sql = $sql . $arg[1];
     }
+    // echo $sql;
     return $this->pdo->query($sql)->fetchColumn();
   }
 
@@ -83,7 +86,7 @@ class DB{
       foreach ($arg as $key => $value){
         $tmp[]=sprintf("`%s`='%s'",$key,$value);
       }
-      $sql = $sql + implode(" && ",$tmp);
+      $sql = $sql . implode(" && ",$tmp);
     }else{
       $sql = $sql . " where `id` = '". $arg. "'";
     }
