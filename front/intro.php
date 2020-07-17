@@ -1,7 +1,7 @@
 <?php
 
 $db = new DB("movie");
-$row = $db=>find($_GET['id']);
+$row = $db->find($_GET['id']);
 
 ?>
 
@@ -15,11 +15,12 @@ $row = $db=>find($_GET['id']);
         <p style="margin:3px">影片分級 ：<?= $level[$row['level']]; ?> </p>
         <p style="margin:3px">影片片長 ：<?= $row['level']; ?>分</p>
         <p style="margin:3px">上映日期：<?= $row['ondate']; ?></p>
-        <p style="margin:3px">發行商 ：<?= $row['piblish']; ?> </p>
+        <p style="margin:3px">發行商 ：<?= $row['publish']; ?> </p>
         <p style="margin:3px">導演 ：<?= $row['director']; ?> </p>
         <br>
         <br>
         <p style="margin:10px 3px 3px 3px; word-break:break-all"> 劇情簡介：<br>
+        <?= $row['intro']; ?>
         </p>
         </font>
         <table width="100%" border="0">

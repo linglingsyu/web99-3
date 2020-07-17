@@ -34,12 +34,11 @@
 
 </style>
 
-<button>新增電影</button>
+<button onclick="location.href='?do=add_movie'">新增電影</button>
 <hr>
 <div class="list">
 
 <?php
-
 $db = new DB('movie');
 $rows = $db->all([]," order by `rank`");
 foreach($rows as $k=>$row){
@@ -60,7 +59,7 @@ foreach($rows as $k=>$row){
     <button onclick="sh('movie',<?= $row['id'] ?>)"><?= $row['sh']==1?"顯示":"隱藏" ?></button>
     <button data-rank="<?= $row['id']."-". $prev ?>" class="shift">往上</button>
     <button data-rank="<?= $row['id']."-". $next ?>" class="shift">往下</button>
-    <button onclick="edit('movie',<?= $row['id'] ?>)">編輯電影</button>
+    <button onclick="location.href='?do=edit_movie&id=<?=$row['id'] ?>'">編輯電影</button>
     <button onclick="del('movie',<?= $row['id'] ?>)">刪除電影</button>
   </div>
     <div>劇情簡介:<?=$row['intro'] ?></div>
@@ -69,7 +68,6 @@ foreach($rows as $k=>$row){
 <hr>
 <?php
 }
-
 ?>
 
 </div>
@@ -95,5 +93,7 @@ foreach($rows as $k=>$row){
       location.reload();
     })
   }
+
+
 
 </script>
