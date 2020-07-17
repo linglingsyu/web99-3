@@ -44,7 +44,7 @@ $("#movie").on("change",function(){
 })
 
 $("#date").on("change",function(){
-  getSession()
+  getSession();
 })
 
 function getDuration(){
