@@ -150,7 +150,7 @@ for($i = 1; $i <= $pages ; $i++){
   let auto = setInterval(() => {
     slider()
   }, 3000);
-  console.log(auto);
+  // console.log(auto);
 
   function slider() {
     let dom = $(".po:visible"); // dom 等於 看的到的那一張
@@ -188,9 +188,8 @@ for($i = 1; $i <= $pages ; $i++){
         $(next).show();
         $(next).animate({width:200,height:260,left:0,top:0});
         $(dom).hide();
-        $(dom).css({widht:200,height:260,left:0,top:0});
+        $(dom).css({width:200,height:260,left:0,top:0});
       });
-      break;
 
     }
 
@@ -206,11 +205,8 @@ for($i = 1; $i <= $pages ; $i++){
       function() {
         clearInterval(auto);
       },
-
       function() {
-        auto = setInterval(() => {
-          slider()
-        }, 3000);
+        auto = setInterval(slider, 3000);
       }
     );
 

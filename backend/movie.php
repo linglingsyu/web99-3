@@ -57,7 +57,7 @@ foreach($rows as $k=>$row){
       <span>上映時間:<?=$row['ondate'] ?></span>
     </div>
     <div>
-    <button onclick="sh('movie',<?= $row['id'] ?>)">顯示</button>
+    <button onclick="sh('movie',<?= $row['id'] ?>)"><?= $row['sh']==1?"顯示":"隱藏" ?></button>
     <button data-rank="<?= $row['id']."-". $prev ?>" class="shift">往上</button>
     <button data-rank="<?= $row['id']."-". $next ?>" class="shift">往下</button>
     <button onclick="edit('movie',<?= $row['id'] ?>)">編輯電影</button>
@@ -69,6 +69,7 @@ foreach($rows as $k=>$row){
 <hr>
 <?php
 }
+
 ?>
 
 </div>
@@ -85,6 +86,12 @@ foreach($rows as $k=>$row){
 
   function del(table,id){
     $.post("api/del.php",{"table":table,id},function(){
+      location.reload();
+    })
+  }
+
+  function sh(table,id){
+    $.post("api/sh.php",{table,id},function(){
       location.reload();
     })
   }
