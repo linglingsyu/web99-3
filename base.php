@@ -3,7 +3,13 @@
 date_default_timezone_set("Asia/Taipei");
 session_start();
 $level = ["","普遍級","輔導級","保護級","限制級"];
-
+$sess = [
+  1=>"14:00~16:00",
+  2=>"16:00~18:00",
+  3=>"18:00~20:00",
+  4=>"20:00~22:00",
+  5=>"22:00~24:00",
+];
 class DB{
 
   private $dsn = "mysql:host=localhost;charset=utf8;dbname=db77";
@@ -35,12 +41,12 @@ class DB{
   }
   
   public function find($arg){
-    $sql = "select * from `$this->table`";
+    $sql = "select * from `$this->table`  ";
     if(is_array($arg)){
       foreach ($arg as $key => $value){
         $tmp[]=sprintf("`%s`='%s'",$key,$value);
       }
-      $sql = $sql . implode(" && ",$tmp);
+      $sql = $sql . " where " . implode(" && ",$tmp);
     }else{
       $sql = $sql . " where `id` = '". $arg. "'";
     }

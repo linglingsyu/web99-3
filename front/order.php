@@ -78,7 +78,7 @@
     <p>您已勾選<span id="ticket">0</span> 張票，最多可以購買四張票</p>
   </div>
   <button onclick="prev()">上一步</button>
-  <button onclick="order()">訂購</button>
+  <button id="send">訂購</button>
 
 </div>
 
@@ -118,23 +118,19 @@
 
   //挑選座位
   function booking() {
-    let movive = $("#movie").val();
+    let movie = $("#movie").val();
     let date = $("#date").val();
     let session = $("#session").val();
     let moviename = $("#movie option:selected").data("name");
     let sessionname = $("#session option:selected").data("name");
     $("#infom").html(moviename);
     $("#infot").html(date + " " + sessionname);
-    $(".order_form").hide();
-
-
-    $.get("api/get_seats.php", function(seats) {
+    $.get("api/get_seats.php",{moviename,date,sessionname},function(seats) {
       $(".room").html(seats);
       //ajax做完才會產生seat，所以有關於checkbox的change事件要放在產生座位後才會生效
       let ticket = 0;
-      let seat = new Array();
+      seat = new Array();
       $("input[type='checkbox']").on("change", function() {
-
         //點完checkbox後，將票數++或--
         let chk = $(this).prop("checked");
         switch (chk) {
@@ -158,11 +154,15 @@
       //  console.log(seat);
         $("#ticket").html(ticket);
       })
-
     })
 
-
-
+    
+    $("#send").on("click",function(){
+          $.post("api/order.php",{movie,date,session,seat},function(ordno){
+            location.href="?do=result&ord="+ordno;
+          })
+    })
+    $(".order_form").hide();
     $(".booking_form").show();
 
 
