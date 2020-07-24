@@ -15,9 +15,9 @@ $rows = $db->all(['sh'=>1],"  && `ondate` >= '$ondate' && `ondate` <= '$today'")
 foreach ($rows as $row ){
   if(!empty($_GET['id'])){
     $selected = ($_GET['id'] == $row['id'])? "selected":"";
-    echo ' <option value="'.$row['id'].'"'. $selected.'>'.$row['name'].'</option>';
+    echo ' <option data-name='.$row['name'].' value="'.$row['id'].'"'. $selected . '>' .$row['name'].'</option>';
   }else{
-    echo ' <option value="'.$row['id'].'">'.$row['name'].'</option>';
+    echo ' <option data-name='.$row['name'].' value="'.$row['id'].'">'.$row['name'].'</option>';
   }
 }
 ?>
@@ -71,11 +71,14 @@ foreach ($rows as $row ){
       }
 
       ?>
-
   </div>
-
-
-<button onclick="prev();">上一步</button>
+<div class="info">
+  <p>您選擇的電影是：<span id="infom"></span></p>
+  <p>您選擇的時刻是：<span id="infot"></span></p>
+  <p>您已勾選<span id="ticket">?</span> 張票，最多可以購買四張票</p>
+</div>
+<button onclick="prev()">上一步</button>
+<button onclick="order()">訂購</button>
 
 </div>
 
@@ -110,6 +113,13 @@ function getSession(){
 
 //挑選座位
 function booking(){
+  let movive = $("#movie").val();
+  let date = $("#date").val();
+  let session = $("#session").val();
+  let moviename = $("#movie option:selected").data("name");
+  let sessionname = $("#session option:selected").data("name");
+  $("#infom").html(moviename);
+  $("#infot").html(date+" "+sessionname);
   $(".order_form").hide();
   $(".booking_form").show();
 }

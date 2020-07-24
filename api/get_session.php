@@ -19,13 +19,13 @@ if( strtotime($_GET['date']) == $today ){
   $now = ($now > 0) ? $now  :  0 ;//修正負值 . 早上訂票顯示問題 (考試不用打) 
   for($i = ($now+1) ; $i <= 5 ; $i++ ){
     //要顯示的場次從下一場開始算
-    echo '<option value="'.$i.'">'.$sess[$i].'</option>';
+    echo '<option data-name='.$sess[$i].' value="'.$i.'">'.$sess[$i].'</option>';
   }
 
 }else{
 
     for($i = 1; $i<=5;$i++){
-      echo '<option value="'.$i.'">'.$sess[$i].'</option>';
+      echo '<option data-name='.$sess[$i].' value="'.$i.'">'.$sess[$i].'</option>';
     } 
 }
 
