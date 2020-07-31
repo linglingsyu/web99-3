@@ -92,7 +92,7 @@ class DB{
       foreach ($arg as $key => $value){
         $tmp[]=sprintf("`%s`='%s'",$key,$value);
       }
-      $sql = $sql . implode(" && ",$tmp);
+      $sql = $sql . " where " .  implode(" && ",$tmp);
     }else{
       $sql = $sql . " where `id` = '". $arg. "'";
     }
